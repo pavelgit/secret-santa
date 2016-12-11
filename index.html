@@ -40,11 +40,10 @@
 
 	var sourcePerson = findGetParameter('sourcePerson');
 	var encDestPerson = findGetParameter('encDestPerson');
-	var key = findGetParameter('key');
 
 	console.log('encDestPerson', encDestPerson);
 
-	var destPerson  = b64_to_utf8(encDestPerson, key);  
+	var destPerson  = decrypt(encDestPerson);  
 
 	document.getElementById('sourcePersonSpan').innerText = sourcePerson;
 	document.getElementById('destPersonSpan').innerText = destPerson;

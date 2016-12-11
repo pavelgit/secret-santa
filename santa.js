@@ -8,7 +8,7 @@ function b64_to_utf8(str) {
     return new Buffer(str, 'base64').toString('utf8');
 }
 
-const encrypt = (str) => utf8_to_b64(str).replace(/\w/g, w => w + (Math.random()<0.8 ? Math.floor(Math.random()*1000000) : ''));
+const encrypt = (str) => utf8_to_b64(str.replace(/./g, w => w + (Math.random()<0.3 ? Math.floor(Math.random()*1000000) : '')));
 const decrypt = (str) => b64_to_utf8(str);
 
 const people = ['Паша', 'Даша', 'Динар', 'Вика', 'Игорь', 'Ринат', 'Андрей'];
