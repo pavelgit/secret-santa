@@ -20,7 +20,7 @@
 	}
 
 	function decrypt(str) {
-		return b64_to_utf8(str).replace(/\d/, '');
+		return b64_to_utf8(str).replace(/\d/g, '');
 	}
 
 
