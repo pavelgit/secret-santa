@@ -1,9 +1,15 @@
 'use strict';
 
+function utf8_to_b64(str) {
+    return new Buffer(str).toString('base64');
+}
 
-const CryptoJS = require("crypto-js");
-const encrypt = (str, key) => CryptoJS.AES.encrypt(str, key).toString();
-const decrypt = (str, key) => CryptoJS.AES.decrypt(str, key).toString(CryptoJS.enc.Utf8);
+function b64_to_utf8(str) {
+    return new Buffer(str, 'base64').toString('utf8');
+}
+
+const encrypt = (str) => utf8_to_b64(str).replace(/\w/g, w => w + (Math.random()<0.8 ? Math.floor(Math.random()*1000000) : ''));
+const decrypt = (str) => b64_to_utf8(str);
 
 const people = ['Паша', 'Даша', 'Динар', 'Вика', 'Игорь', 'Ринат', 'Андрей'];
 const families = [['Паша', 'Даша', 'Андрей'], ['Динар', 'Вика', 'Ринат'], ['Игорь']];
@@ -43,11 +49,10 @@ const createGoodDest = (people, families) => {
 
 const dest = createGoodDest(people, families);
 
-const getUrl = (sourcePerson, encDestPerson, key) => `https://pavelgit.github.io/secret-santa/?sourcePerson=${encodeURIComponent(sourcePerson)}&encDestPerson=${encodeURIComponent(encDestPerson)}&key=${encodeURIComponent(key)}`;
+const getUrl = (sourcePerson, encDestPerson) => `https://pavelgit.github.io/secret-santa/?sourcePerson=${sourcePerson}&encDestPerson=${encodeURIComponent(encDestPerson)}`;
 for (const sourcePerson of Object.keys(dest)) {	
 	const destPerson = dest[sourcePerson];
-	const key = ''+Math.floor(Math.random()*10000000);
-	const encDestPerson = encrypt(destPerson, key);
-	const url = getUrl(sourcePerson, encDestPerson, key);
+	const encDestPerson = encrypt(destPerson);
+	const url = getUrl(sourcePerson, encDestPerson);
 	console.log(url);
 }
