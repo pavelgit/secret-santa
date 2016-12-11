@@ -2,19 +2,41 @@
 
 <head>
 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/aes-min.js'></script>
-
-<script>
-
-	console.log(CriptoJS);
-
-</script>
 
 </head>
 
 <body>
 
-Hello
+<span style='font-weight: bold' id='sourcePersonSpan'></span> дарит подарок <span style='font-weight: bold' id='destPersonSpan'></span>
+
+<script type="text/javascript" src="http://cryptojs.altervista.org/api/functions_cryptography.js"></script>  
+<script type="text/javascript">  
+  
+	function findGetParameter(parameterName) {
+	    var result = null,
+	        tmp = [];
+	    location.search
+	    .substr(1)
+	        .split("&")
+	        .forEach(function (item) {
+	        tmp = item.split("=");
+	        if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+	    });
+	    return result;
+	}
+
+
+	var sourcePerson = findGetParameter('sourcePerson');
+	var encDestPerson = findGetParameter('encDestPerson');
+	var key = findGetParameter('key');
+
+	var Crypt = new Crypt(); 
+	var destPerson  = Crypt.AES.decrypt(encDestPerson, key);  
+
+	document.getElementById('sourcePersonSpan').innerText = sourcePerson;
+	document.getElementById('destPersonSpan').innerText = destPerson;
+
+</script>  
 
 </body>
 
